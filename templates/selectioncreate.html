@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Golden Globe Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Les styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+</head>
+<body>
+<!-- The nav bar at the top -->
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="/">Scoreboard</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/selection/create">Create Selection</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h2>Selection Creation</h2>
+    {% if warning %}
+        <h2><p class="text-danger">{{ warning }}</p></h2>
+    {% endif %}
+    <form action="/selection/create" method="post" class="form-horizontal">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Create Selection</legend>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="selection_name">Selection Name</label>
+                <div class="controls">
+                    <input id="selection_name" name="selection_name" type="text" class="input-xlarge">
+                </div>
+            </div>
+
+            <!-- Multiple Radios -->
+            {% for param in params %}
+            <div class="control-group">
+                <label class="control-label" for="radios">{{ param.category.name }}</label>
+                <div class="controls">
+                    {% for nominee in param.nominees %}
+                    <label class="radio" for={{ nominee.id }}>
+                        <input type="radio" name={{ param.category.id }} id={{ nominee.id }} value={{ nominee.id }} checked="checked">
+                        {{ nominee.name }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="submit">Submit</label>
+                <div class="controls">
+                    <input id="submit" type="submit" value="Submit">
+                </div>-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src=" /static/js/jquery.min.js"></script>
+<script src=" /static/js/bootstrap.min.js"></script>
+
+</body>
+</html>

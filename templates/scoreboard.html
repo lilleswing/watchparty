@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Golden Globe Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Les styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+</head>
+<body>
+
+<!-- The nav bar at the top -->
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="/">Scoreboard</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/selection/create">Create Selection</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+<h2>doesn't show for some reason</h2><br>
+<h2>Scoreboard</h2>
+<table class="table table-hover table-condensed table-bordered">
+    <thead>
+    <tr>
+        <td>Selection Name</td>
+        <td>Points</td>
+    </tr>
+    </thead>
+    {% for selection in selections %}
+        <tr>
+        <td><a href="/selection/{{ selection.id }}">{{ selection.name }}</a></td>
+        <td>{{ selection.points }}</td>
+        </tr>
+{% endfor %}
+</table>
+
+</body>
+</html>
