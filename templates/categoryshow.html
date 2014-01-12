@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Golden Globe Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Les styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+</head>
+<body>
+<!-- The nav bar at the top -->
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="/">Scoreboard</a>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/selection/create">Create Selection</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h2>not seen for some reason</h2><br>
+    <h2>{{ category.name }} {{ category.id }}</h2>
+    {% for nominee in nominees %}
+        <h3><li>{{ nominee.id }} {{ nominee.name }}</li></h3>
+    {% endfor %}
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src=" /static/js/jquery.min.js"></script>
+<script src=" /static/js/bootstrap.min.js"></script>
+
+</body>
+</html>

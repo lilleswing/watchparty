@@ -77,6 +77,19 @@ def create_selection_view():
     return create_selection_view(None)
 
 
+@app.route('/category', methods=["GET"])
+def category_index():
+    categories = db.session.query(Category).all()
+    return render_template("categoryindex.html", categories=categories)
+
+
+@app.route('/category/<int:category_id>', methods=["GET"])
+def category_show(category_id):
+    category = db.session.query(Category).filter(Category.id == category_id).all()[0]
+    nominees = db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
+    return render_template("categoryshow.html", category=category, nominees=nominees)
+
+
 def create_selection_view(warning):
     params = []
     categories = db.session.query(Category).all()
@@ -235,6 +248,7 @@ def set_winner(category_id, nominee_id):
     db.session.merge(category)
     db.session.commit()
     update_score()
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
