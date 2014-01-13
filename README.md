@@ -1,4 +1,5 @@
 # Watchparty
+[See It Live](http://ancient-fortress-3044.herokuapp.com)
 
 This repository contains a Flask application for watching award shows.
 
@@ -47,22 +48,22 @@ and in the Python REPL:
 ```
 
 ## TODO
-* Create default sqlite data with 2014 Golden Globes.
+- [ ] Create default sqlite data with 2014 Golden Globes.
     * Load from sqlite if can't find os.environ['DATABASE_URL']
     * Before the night has started
     * Middle of the night
     * After the night has ended
-* Use templates for HTML files instead of copy-pasta
-* Fix headers showing up under the tab-header
-* Create groups.  Only see other selections from the same group.
+- [ ] Use templates for HTML files instead of copy-pasta
+- [ ] Fix headers showing up under the tab-header
+- [ ] Create groups.  Only see other selections from the same group.
     * Groups can also set points for each category
     * Have default point-set
-* See who selected which nominee to win each category.
+- [ ] See who selected which nominee to win each category.
     * With category announced
     * With category unnanounced
-* Create "Categories" tab which list categories announced and to be announced
-* Show Points Left to be announced at top of scoreboard.
-* Edit Selections -- requires some sort of auth system
-* Use jquery to load the screen of what is happening --> "watch" tab
+- [ ] Create "Categories" tab which list categories announced and to be announced
+- [ ] Show Points Left to be announced at top of scoreboard.
+- [ ] Edit Selections -- requires some sort of auth system
+- [ ] Use jquery to load the screen of what is happening --> "watch" tab
     * Category when it is being announced + 30 seconds after announceds
     * Scoreboard when no category is being being announced
