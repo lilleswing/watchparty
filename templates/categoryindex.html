@@ -27,10 +27,10 @@
 </div>
 
 <div class="container-fluid">
-    <h2>not seen for some reason</h2><br>
+    <h2></h2><br>
     <h2>Categories</h2>
     {% for category in categories %}
-        <a href="/category/{{ category.id }}">{{ category.name }}</a><br>
+        <a href="/category/{{ category.id }}">{{ category.name }} {{ category.point_value }}</a><br>
     {% endfor %}
 </div>
 <!--/.fluid-container-->
