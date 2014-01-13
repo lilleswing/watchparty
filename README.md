@@ -71,4 +71,4 @@ and in the Python REPL:
 - [ ] When selecting a nominee to win a category load relevant picture
 - [ ] Create "events" so I don't have to wipe the DB for every new event
 - [ ] Get a favicon
-- [] Create admin panel to set winners, create events
+- [ ] Create admin panel to set winners, create events
