@@ -15,8 +15,8 @@ Allows users to see their selections.
 $ git clone https://github.com/lilleswing/watchparty.git
 $ cd watchparty
 $ virtualenv venv
-$ pip install -r requirements.txt
 $ source venv/bin/activate
+$ pip install -r requirements.txt
 $ python watchparty.py
 ```
 
