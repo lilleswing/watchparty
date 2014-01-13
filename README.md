@@ -62,7 +62,7 @@ and in the Python REPL:
     * With category announced
     * With category unannounced
 - [ ] Create "Categories" tab which list categories announced and to be announced
-- [ ] Show Points Left to be announced at top of scoreboard.
+- [ ] Show Points Left to be announced at top of scoreboard. Also Available Points
 - [ ] Edit Selections -- requires some sort of auth system
 - [ ] Use jquery to load the screen of what is happening --> "watch" tab
     * Category when it is being announced + 30 seconds after announced
