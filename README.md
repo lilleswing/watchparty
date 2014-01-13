@@ -54,6 +54,7 @@ and in the Python REPL:
     * Middle of the night
     * After the night has ended
 - [ ] Use templates for HTML files instead of copy-pasta
+    * Considering switching to backbone + resty json
 - [ ] Fix headers showing up under the tab-header
 - [ ] Create groups.  Only see other selections from the same group.
     * Groups can also set points for each category
@@ -70,3 +71,4 @@ and in the Python REPL:
 - [ ] When selecting a nominee to win a category load relevant picture
 - [ ] Create "events" so I don't have to wipe the DB for every new event
 - [ ] Get a favicon
+- [ ] Create admin panel to set winners, create events
