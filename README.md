@@ -72,3 +72,4 @@ and in the Python REPL:
 - [ ] Create "events" so I don't have to wipe the DB for every new event
 - [ ] Get a favicon
 - [ ] Create admin panel to set winners, create events
+- [ ] Optimize Queries
