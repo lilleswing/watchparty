@@ -1,5 +1,5 @@
 # Watchparty
-[See It Live](http://ancient-fortress-3044.herokuapp.com)
+[See It Live](http://watchparty.herokuapp.com)
 
 This repository contains a Flask application for watching award shows.
 
