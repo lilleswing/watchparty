@@ -89,6 +89,19 @@ def category_show(category_id):
     nominees = db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
     return render_template("categoryshow.html", category=category, nominees=nominees)
 
+@app.route('/category/<int:category_id>/pick', methods=["GET"])
+def category_show(category_id):
+    nominees = db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
+    selections = db.session.query(Selection).filter(Selection).all()
+    picks = db.session.query(Pick).filter(Pick.category_id == category_id).all()
+    params = []
+    for pick in picks:
+        nom = filter(lambda x: x.id == pick.nominee_id, nominees)[0]
+        selection = filter(lambda x: x.id == pick.selection_id)[0]
+        params.append({"nominee": nom, "selection": selection})
+    params = sorted(params, key=lambda x: x["nominee"].name)
+    return render_template("categorypick.html", params=params)
+
 
 def create_selection_view(warning):
     params = []
