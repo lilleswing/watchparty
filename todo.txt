@@ -1,4 +1,0 @@
-color view_selection(selection_id) with right and wrong
-write update_score()
-push to heroku
-get favicon

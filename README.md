@@ -60,10 +60,11 @@ and in the Python REPL:
     * Have default point-set
 - [ ] See who selected which nominee to win each category.
     * With category announced
-    * With category unnanounced
+    * With category unannounced
 - [ ] Create "Categories" tab which list categories announced and to be announced
 - [ ] Show Points Left to be announced at top of scoreboard.
 - [ ] Edit Selections -- requires some sort of auth system
 - [ ] Use jquery to load the screen of what is happening --> "watch" tab
-    * Category when it is being announced + 30 seconds after announceds
+    * Category when it is being announced + 30 seconds after announced
     * Scoreboard when no category is being being announced
+- [ ] When selecting a nominee to win a category load relevant picture
