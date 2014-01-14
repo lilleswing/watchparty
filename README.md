@@ -66,3 +66,4 @@ and in the Python REPL:
     * Category when it is being announced + 30 seconds after announced
     * Scoreboard when no category is being being announced
 - [ ] When selecting a nominee to win a category load relevant picture
+- [ ] Rename controller funtions to closer match route
