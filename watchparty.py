@@ -2,72 +2,19 @@ import os
 
 from flask import Flask, request, redirect, url_for
 from flask import render_template
-from flask.ext.sqlalchemy import SQLAlchemy
+from src.models import Selection, Category, Group, Event, Nominee, Pick, db
+
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///dev/db/start.db')
-db = SQLAlchemy(app)
+db.app = app
+db.init_app(app)
 
-
-class Selection(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80))
-    points = db.Column(db.Integer)
-
-    def __init__(self, name):
-        self.name = name
-        self.points = 0
-
-    def __repr__(self):
-        return '<Name %r>' % self.name
-
-
-class Category(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(128))
-    winner = db.Column(db.Integer)
-    point_value = db.Column(db.Integer)
-
-    def __init__(self, name):
-        self.name = name
-        self.winner = -1
-        self.point_value = 1
-
-    def __repr__(self):
-        return '<Name %r>' % self.name
-
-
-class Nominee(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer)
-    name = db.Column(db.String(256))
-
-    def __init__(self, name, category_id):
-        self.name = name
-        self.category_id = category_id
-
-    def __repr__(self):
-        return '<Name %r>' % self.name
-
-
-class Pick(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    selection_id = db.Column(db.Integer)
-    category_id = db.Column(db.Integer)
-    nominee_id = db.Column(db.Integer)
-
-    def __init__(self, selection_id, category_id, nominee_id):
-        self.selection_id = selection_id
-        self.category_id = category_id
-        self.nominee_id = nominee_id
-
-    def __repr__(self):
-        return '<selection_id %d, category_id %d, nominee_id %d>' % (
-            self.selection_id, self.category_id, self.nominee_id)
 
 
 @app.route('/')
 def home():
+    seed()
     selections = db.session.query(Selection).order_by(Selection.points).all()[::-1]
     return render_template('scoreboard.html', selections=selections)
 
@@ -141,7 +88,9 @@ def robots():
 
 
 def seed():
+    db.drop_all()
     db.create_all()
+
     categories = [
         {"Best Motion Picture, Drama": ["12 Years a Slave", "Captain Phillips", "Gravity", "Philomena", "Rush"]}, {
             "Best Actor in a Motion Picture, Drama": ["Chiwetel Ejiofor, 12 Years A Slave",
@@ -251,5 +200,6 @@ def set_winner(category_id, nominee_id):
 
 
 if __name__ == '__main__':
+    seed()
     port = int(os.environ.get('PORT', 5000))
     app.run(host='0.0.0.0', port=port, debug=True)
