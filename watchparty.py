@@ -1,14 +1,16 @@
 import os
 
-from flask import Flask, request, redirect, url_for
+from flask import Flask, request
 from flask import render_template
 from src.models import Selection, Category, Group, Event, Nominee, Pick, db
+from src.controllers.selections_controller import SelectionsController
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///dev/db/start.db')
 db.app = app
 db.init_app(app)
+selectionsController = SelectionsController(db)
 
 
 @app.route('/')
@@ -19,7 +21,17 @@ def home():
 
 @app.route('/selection/create', methods=["GET"])
 def create_selection_view():
-    return create_selection_view(None)
+    return selectionsController.create_selection_view(None)
+
+
+@app.route('/selection/create', methods=["POST"])
+def create_selection():
+    return selectionsController.create_selection(request.form)
+
+
+@app.route('/selection/<int:selection_id>', methods=["GET"])
+def view_selection(selection_id):
+    return selectionsController.view_selection(selection_id)
 
 
 @app.route('/category', methods=["GET"])
@@ -33,49 +45,6 @@ def category_show(category_id):
     category = db.session.query(Category).filter(Category.id == category_id).all()[0]
     nominees = db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
     return render_template("categoryshow.html", category=category, nominees=nominees)
-
-
-def create_selection_view(warning):
-    params = []
-    categories = db.session.query(Category).all()
-    for category in categories:
-        param = {}
-        nominees = db.session.query(Nominee).filter(Nominee.category_id == category.id).all()
-        param["category"] = category
-        param["nominees"] = nominees
-        params.append(param)
-    return render_template("selectioncreate.html", warning=warning, params=params)
-
-
-@app.route('/selection/create', methods=["POST"])
-def create_selection():
-    category_ids = set([str(x[0]) for x in db.session.query(Category.id).order_by(Category.id).all()])
-    if not category_ids.issubset(request.form.keys()):
-        return create_selection_view("Please select a winner for every category")
-    if request.form["selection_name"] == "":
-        return create_selection_view("Please select a name for your selections")
-    selection = Selection(request.form["selection_name"])
-    db.session.add(selection)
-    db.session.commit()
-    for category_id in category_ids:
-        nominee_id = int(request.form[category_id])
-        pick = Pick(selection.id, category_id, nominee_id)
-        db.session.add(pick)
-        db.session.commit()
-    return redirect(url_for('view_selection', selection_id=selection.id))
-
-
-@app.route('/selection/<int:selection_id>', methods=["GET"])
-def view_selection(selection_id):
-    selection = db.session.query(Selection).filter(Selection.id == selection_id).all()[0]
-    picks = db.session.query(Pick).filter(Pick.selection_id == selection_id).order_by(Pick.category_id).all()
-    params = []
-    for pick in picks:
-        category_name = db.session.query(Category).filter(Category.id == pick.category_id).all()[0].name
-        nominee_name = db.session.query(Nominee).filter(Nominee.id == pick.nominee_id).all()[0].name
-        param = {"category_name": category_name, "nominee_name": nominee_name}
-        params.append(param)
-    return render_template("selectionview.html", params=params, name=selection.name)
 
 
 @app.route('/robots.txt')
