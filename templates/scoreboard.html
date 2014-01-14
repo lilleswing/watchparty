@@ -26,22 +26,25 @@
         </div>
     </div>
 </div>
-<h2>doesn't show for some reason</h2><br>
-<h2>Scoreboard</h2>
-<table class="table table-hover table-condensed table-bordered">
-    <thead>
-    <tr>
-        <td>Selection Name</td>
-        <td>Points</td>
-    </tr>
-    </thead>
-    {% for selection in selections %}
+
+<div class="container-fluid">
+    <h2></h2><br>
+    <h2>Scoreboard</h2>
+    <table class="table table-hover table-condensed table-bordered">
+        <thead>
         <tr>
-        <td><a href="/selection/{{ selection.id }}">{{ selection.name }}</a></td>
-        <td>{{ selection.points }}</td>
+            <td>Selection Name</td>
+            <td>Points</td>
         </tr>
-{% endfor %}
-</table>
+        </thead>
+        {% for selection in selections %}
+            <tr>
+            <td><a href="/selection/{{ selection.id }}">{{ selection.name }}</a></td>
+            <td>{{ selection.points }}</td>
+            </tr>
+    {% endfor %}
+    </table>
+</div>
 
 </body>
 </html>

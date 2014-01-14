@@ -49,12 +49,10 @@ and in the Python REPL:
 
 ## TODO
 - [ ] Create default sqlite data with 2014 Golden Globes.
-    * Load from sqlite if can't find os.environ['DATABASE_URL']
     * Before the night has started
     * Middle of the night
     * After the night has ended
 - [ ] Use templates for HTML files instead of copy-pasta
-- [ ] Fix headers showing up under the tab-header
 - [ ] Create groups.  Only see other selections from the same group.
     * Groups can also set points for each category
     * Have default point-set
