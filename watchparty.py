@@ -20,18 +20,18 @@ def home():
 
 
 @app.route('/selection/create', methods=["GET"])
-def create_selection_view():
-    return selectionsController.create_selection_view(None)
+def selection_create_get():
+    return selectionsController.create_get()
 
 
 @app.route('/selection/create', methods=["POST"])
-def create_selection():
-    return selectionsController.create_selection(request.form)
+def selection_create_post():
+    return selectionsController.create_post(request.form)
 
 
 @app.route('/selection/<int:selection_id>', methods=["GET"])
-def view_selection(selection_id):
-    return selectionsController.view_selection(selection_id)
+def selection_get(selection_id):
+    return selectionsController.get(selection_id)
 
 
 @app.route('/category', methods=["GET"])
