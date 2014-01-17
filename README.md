@@ -53,6 +53,8 @@ and in the Python REPL:
     * Middle of the night
     * After the night has ended
 - [ ] Use templates for HTML files instead of copy-pasta
+    * Considering switching to backbone + resty json
+- [ ] Fix headers showing up under the tab-header
 - [ ] Create groups.  Only see other selections from the same group.
     * Groups can also set points for each category
     * Have default point-set
@@ -66,4 +68,7 @@ and in the Python REPL:
     * Category when it is being announced + 30 seconds after announced
     * Scoreboard when no category is being being announced
 - [ ] When selecting a nominee to win a category load relevant picture
-- [ ] Rename controller funtions to closer match route
+- [ ] Rename controller functions to closer match route
+- [ ] Create "events" so I don't have to wipe the DB for every new event
+- [ ] Get a favicon
+- [ ] Create admin panel to set winners, create events
