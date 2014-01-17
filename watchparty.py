@@ -1,49 +1,52 @@
 import os
 
 from flask import Flask, request
-from flask import render_template
-from src.models import Selection, db
+from src.models import db
 from src.controllers.selections_controller import SelectionsController
 from src.controllers.categories_controller import CategoriesController
+from src.controllers.groups_controller import GroupsController
 
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///dev/db/start.db')
 db.app = app
 db.init_app(app)
-selectionsController = SelectionsController(db)
-categoriesController = CategoriesController(db)
+selections_controller = SelectionsController(db)
+categories_controller = CategoriesController(db)
+groups_controller = GroupsController(db)
 
 
 @app.route('/')
-def home():
-    selections = db.session.query(Selection).order_by(Selection.points).all()[::-1]
-    return render_template('scoreboard.html', selections=selections)
+def group_get():
+    return groups_controller.get()
 
+@app.route('/<string:group_name>')
+def group_get_id(group_name):
+    return groups_controller.get_id(group_name)
 
 @app.route('/selection/create', methods=["GET"])
 def selection_create_get():
-    return selectionsController.create_get()
+    return selections_controller.create_get()
 
 
 @app.route('/selection/create', methods=["POST"])
 def selection_create_post():
-    return selectionsController.create_post(request.form)
+    return selections_controller.create_post(request.form)
 
 
 @app.route('/selection/<int:selection_id>', methods=["GET"])
-def selection_get(selection_id):
-    return selectionsController.get(selection_id)
+def selection_get_id(selection_id):
+    return selections_controller.get(selection_id)
 
 
 @app.route('/category', methods=["GET"])
 def category_get():
-    return categoriesController.get()
+    return categories_controller.get()
 
 
 @app.route('/category/<int:category_id>', methods=["GET"])
 def category_show(category_id):
-    return categoriesController.get(category_id)
+    return categories_controller.get_id(category_id)
 
 
 @app.route('/robots.txt')

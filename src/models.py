@@ -57,6 +57,7 @@ class Selection(db.Model):
 
 class Category(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    event_id = db.Column(db.Integer)
     name = db.Column(db.String(128))
     winner = db.Column(db.Integer)
     point_value = db.Column(db.Integer)
@@ -89,7 +90,6 @@ class Pick(db.Model):
 def seed():
     db.drop_all()
     db.create_all()
-
     categories = [
         {"Best Motion Picture, Drama": ["12 Years a Slave", "Captain Phillips", "Gravity", "Philomena", "Rush"]}, {
             "Best Actor in a Motion Picture, Drama": ["Chiwetel Ejiofor, 12 Years A Slave",
@@ -163,7 +163,12 @@ def seed():
                                                                        "Edie Falco, Nurse Jackie",
                                                                        "Julia Louis-Dreyfus, Veep",
                                                                        "Amy Poehler, Parks and Recreation"]}]
+    event = Event()
+    event.name = "Golden Globes 2014"
+    db.session.add(event)
+    db.session.commit()
     for category in categories:
+        category.event_id = event.id
         cat_name = list(category.keys())[0]
         cat_model = Category(cat_name)
         db.session.add(cat_model)
