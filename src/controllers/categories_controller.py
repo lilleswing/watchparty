@@ -1,5 +1,5 @@
 __author__ = 'karl'
-from src.models import Category, Nominee
+from models import Category, Nominee
 from flask import render_template
 
 

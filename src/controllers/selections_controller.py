@@ -1,7 +1,7 @@
 __author__ = 'leswing'
 
 from flask import render_template, redirect, url_for
-from src.models import Nominee, Category, Pick, Selection
+from models import Nominee, Category, Pick, Selection
 
 
 class SelectionsController():
