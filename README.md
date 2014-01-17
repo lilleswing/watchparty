@@ -48,16 +48,16 @@ and in the Python REPL:
 ```
 
 ## TODO
+- [ ] Create groups.  Only see other selections from the same group.
+    * Groups can also set points for each category
+    * Have default point-set
+- [ ] Create "events" so I don't have to wipe the DB for every new event
 - [ ] Create default sqlite data with 2014 Golden Globes.
     * Before the night has started
     * Middle of the night
     * After the night has ended
-- [ ] Use templates for HTML files instead of copy-pasta
-    * Considering switching to backbone + resty json
-- [ ] Fix headers showing up under the tab-header
-- [ ] Create groups.  Only see other selections from the same group.
-    * Groups can also set points for each category
-    * Have default point-set
+- [ ] JSON rest webservice
+- [ ] Front end in backbone.js
 - [ ] See who selected which nominee to win each category.
     * With category announced
     * With category unannounced
@@ -68,8 +68,6 @@ and in the Python REPL:
     * Category when it is being announced + 30 seconds after announced
     * Scoreboard when no category is being being announced
 - [ ] When selecting a nominee to win a category load relevant picture
-- [ ] Rename controller functions to closer match route
-- [ ] Create "events" so I don't have to wipe the DB for every new event
 - [ ] Get a favicon
 - [ ] Create admin panel to set winners, create events
 - [ ] Optimize Queries
