@@ -13,6 +13,6 @@ class CategoriesController():
         return render_template("categoryindex.html", categories=categories)
 
     def get(self, category_id):
-        category = self.db.session.query(Category).filter(Category.id == category_id).all()[0]
+        category = self.db.session.query(Category).filter(Category.id == category_id).first()
         nominees = self.db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
         return render_template("categoryshow.html", category=category, nominees=nominees)

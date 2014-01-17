@@ -37,12 +37,12 @@ class SelectionsController():
         return redirect(url_for('selection_get', selection_id=selection.id))
 
     def get(self, selection_id):
-        selection = self.db.session.query(Selection).filter(Selection.id == selection_id).all()[0]
+        selection = self.db.session.query(Selection).filter(Selection.id == selection_id).first()
         picks = self.db.session.query(Pick).filter(Pick.selection_id == selection_id).order_by(Pick.category_id).all()
         params = []
         for pick in picks:
-            category_name = self.db.session.query(Category).filter(Category.id == pick.category_id).all()[0].name
-            nominee_name = self.db.session.query(Nominee).filter(Nominee.id == pick.nominee_id).all()[0].name
+            category_name = self.db.session.query(Category).filter(Category.id == pick.category_id).first().name
+            nominee_name = self.db.session.query(Nominee).filter(Nominee.id == pick.nominee_id).first().name
             param = {"category_name": category_name, "nominee_name": nominee_name}
             params.append(param)
         return render_template("selectionview.html", params=params, name=selection.name)
