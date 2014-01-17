@@ -1,1 +1,1 @@
-web: gunicorn watchparty:app
+web: gunicorn src/watchparty:app
