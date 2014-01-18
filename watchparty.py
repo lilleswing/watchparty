@@ -24,9 +24,10 @@ def group_get():
 def group_get_id(group_name):
     return groups_controller.get_id(group_name)
 
-@app.route('/selection/create', methods=["GET"])
-def selection_create_get():
-    return selections_controller.create_get()
+
+@app.route('/<string:group_name>/selection/create', methods=["GET"])
+def selection_create_get(group_name):
+    return selections_controller.create_get(group_name)
 
 
 @app.route('/selection/create', methods=["POST"])

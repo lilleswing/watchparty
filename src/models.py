@@ -168,9 +168,9 @@ def seed():
     db.session.add(event)
     db.session.commit()
     for category in categories:
-        category.event_id = event.id
         cat_name = list(category.keys())[0]
         cat_model = Category(cat_name)
+        cat_model.event_id = event.id
         db.session.add(cat_model)
         db.session.commit()
         cat_values = category[cat_name]
@@ -179,3 +179,8 @@ def seed():
             nom = Nominee(value, cat_model.id)
             db.session.add(nom)
             db.session.commit()
+    group = Group()
+    group.event_id = event.id
+    group.name = "abc"
+    db.session.add(group)
+    db.session.commit()

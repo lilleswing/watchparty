@@ -17,4 +17,3 @@ class GroupsController():
         selections = self.db.session.query(Selection).filter(Selection.group_id == group.id).order_by(
             Selection.points).all()[::-1]
         return render_template('scoreboard.html', selections=selections)
-

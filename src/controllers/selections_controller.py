@@ -1,7 +1,7 @@
 __author__ = 'leswing'
 
 from flask import render_template, redirect, url_for
-from src.models import Nominee, Category, Pick, Selection
+from src.models import Nominee, Category, Pick, Selection, Group
 
 
 class SelectionsController():
@@ -9,9 +9,10 @@ class SelectionsController():
     def __init__(self, db):
         self.db = db
 
-    def create_get(self, warning=None):
+    def create_get(self, group_name, warning=None):
         params = []
-        categories = self.db.session.query(Category).all()
+        group = self.db.session.query(Group).filter(Group.name == group_name).all()[0]
+        categories = self.db.session.query(Category).filter(Category.event_id == group.event_id).all()
         for category in categories:
             param = {}
             nominees = self.db.session.query(Nominee).filter(Nominee.category_id == category.id).all()
