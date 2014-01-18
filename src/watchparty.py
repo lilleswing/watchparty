@@ -30,9 +30,9 @@ def selection_create_get(group_name):
     return selections_controller.create_get(group_name)
 
 
-@app.route('/selection/create', methods=["POST"])
-def selection_create_post():
-    return selections_controller.create_post(request.form)
+@app.route('/<string:group_name>/selection/create', methods=["POST"])
+def selection_create_post(group_name):
+    return selections_controller.create_post(group_name, request.form)
 
 
 @app.route('/selection/<int:selection_id>', methods=["GET"])

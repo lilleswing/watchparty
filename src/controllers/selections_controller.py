@@ -30,13 +30,15 @@ class SelectionsController():
         return render_template("selectioncreate.html", warning=warning, params=params)
 
     # TODO(Leswing) Change to reading in from JSON
-    def create_post(self, params):
+    def create_post(self, group_name, params):
+        group = self.group_dao.get_by_name(group_name)
         category_ids = set([str(x[0]) for x in self.db.session.query(Category.id).order_by(Category.id).all()])
         if not category_ids.issubset(params.keys()):
             return self.create_get("Please select a winner for every category")
         if params["selection_name"] == "":
             return self.create_get("Please select a name for your selections")
         selection = Selection(params["selection_name"])
+        selection.group_id = group.id
         self.db.session.add(selection)
         self.db.session.commit()
         for category_id in category_ids:
