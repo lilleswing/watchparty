@@ -1,6 +1,6 @@
 __author__ = 'karl'
-from src.models import Category, Nominee
-from flask import render_template
+import json
+from models import Category, Nominee
 
 
 class CategoriesController():
@@ -10,9 +10,8 @@ class CategoriesController():
 
     def get(self):
         categories = self.db.session.query(Category).all()
-        return render_template("categoryindex.html", categories=categories)
+        return json.dumps([x.to_json for x in categories])
 
     def get(self, category_id):
         category = self.db.session.query(Category).filter(Category.id == category_id).first()
-        nominees = self.db.session.query(Nominee).filter(Nominee.category_id == category_id).order_by(Nominee.id).all()
-        return render_template("categoryshow.html", category=category, nominees=nominees)
+        return category.to_json()

@@ -1,5 +1,5 @@
 __author__ = 'karl'
-
+import json
 from flask.ext.sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -13,6 +13,13 @@ class Nominee(db.Model):
     def __init__(self, name, category_id):
         self.name = name
         self.category_id = category_id
+
+    def to_json(self):
+        return json.dumps({
+            "id": self.id,
+            "category_id": self.category_id,
+            "name": self.name
+        })
 
     def __repr__(self):
         return '<Name %r>' % self.name
@@ -29,16 +36,11 @@ class Group(db.Model):
     event_id = db.Column(db.Integer)
 
 
-class Categories_Events(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    category_id = db.Column(db.Integer)
-    event_id = db.Column(db.Integer)
-
-
 class Categories_Groups(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer)
     group_id = db.Column(db.Integer)
+    point_value = db.Column(db.Integer)
 
 
 class Selection(db.Model):
@@ -69,6 +71,15 @@ class Category(db.Model):
 
     def __repr__(self):
         return '<Name %r>' % self.name
+
+    def to_json(self):
+        return json.dumps({
+            "id": self.id,
+            "event_id": self.event_id,
+            "name": self.name,
+            "winner": self.winner,
+            "point_value": self.point_value
+        })
 
 
 class Pick(db.Model):
