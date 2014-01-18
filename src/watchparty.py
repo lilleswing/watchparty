@@ -1,10 +1,10 @@
 import os
 
 from flask import Flask, request
-from flask import render_template
-from models import Selection, db
+from models import db
 from controllers.selections_controller import SelectionsController
 from controllers.categories_controller import CategoriesController
+from controllers.groups_controller import GroupsController
 
 
 app = Flask(__name__)
