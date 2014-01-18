@@ -1,14 +1,14 @@
 import os
 
 from flask import Flask, request
-from src.models import db
-from src.controllers.selections_controller import SelectionsController
-from src.controllers.categories_controller import CategoriesController
-from src.controllers.groups_controller import GroupsController
+from flask import render_template
+from models import Selection, db
+from controllers.selections_controller import SelectionsController
+from controllers.categories_controller import CategoriesController
 
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///dev/db/start.db')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'sqlite:///../dev/db/start.db')
 db.app = app
 db.init_app(app)
 selections_controller = SelectionsController(db)

@@ -1,1 +1,1 @@
-web: gunicorn src/watchparty:app
+web: gunicorn --pythonpath watchparty:app

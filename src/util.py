@@ -1,5 +1,5 @@
 __author__ = 'karl'
-from src.models import Selection, Category, Pick
+from models import Selection, Category, Pick
 
 
 class Util():
