@@ -9,17 +9,14 @@ class Nominee(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     category_id = db.Column(db.Integer)
     name = db.Column(db.String(256))
+    keys = {"id", "category_id", "name"}
 
     def __init__(self, name, category_id):
         self.name = name
         self.category_id = category_id
 
-    def to_json(self):
-        return json.dumps({
-            "id": self.id,
-            "category_id": self.category_id,
-            "name": self.name
-        })
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
     def __repr__(self):
         return '<Name %r>' % self.name
@@ -28,12 +25,20 @@ class Nominee(db.Model):
 class Event(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(128))
+    keys = {"id", "name"}
+
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
 
 class Group(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(20))
     event_id = db.Column(db.Integer)
+    keys = {"id", "name", "event_id"}
+
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
 
 class Categories_Groups(db.Model):
@@ -48,13 +53,16 @@ class Selection(db.Model):
     name = db.Column(db.String(80))
     group_id = db.Column(db.Integer)
     points = db.Column(db.Integer)
+    keys = {"id", "name", "group_id", "points"}
 
-    def __init__(self, name):
-        self.name = name
+    def __init__(self):
         self.points = 0
 
     def __repr__(self):
         return '<Name %r>' % self.name
+
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
 
 class Category(db.Model):
@@ -63,6 +71,7 @@ class Category(db.Model):
     name = db.Column(db.String(128))
     winner = db.Column(db.Integer)
     point_value = db.Column(db.Integer)
+    keys = {"id", "event_id", "name", "winner", "point_value"}
 
     def __init__(self, name):
         self.name = name
@@ -72,14 +81,8 @@ class Category(db.Model):
     def __repr__(self):
         return '<Name %r>' % self.name
 
-    def to_json(self):
-        return json.dumps({
-            "id": self.id,
-            "event_id": self.event_id,
-            "name": self.name,
-            "winner": self.winner,
-            "point_value": self.point_value
-        })
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
 
 class Pick(db.Model):
@@ -87,6 +90,7 @@ class Pick(db.Model):
     selection_id = db.Column(db.Integer)
     category_id = db.Column(db.Integer)
     nominee_id = db.Column(db.Integer)
+    keys = {"id", "selection_id", "category_id", "nominee_id"}
 
     def __init__(self, selection_id, category_id, nominee_id):
         self.selection_id = selection_id
@@ -96,6 +100,9 @@ class Pick(db.Model):
     def __repr__(self):
         return '<selection_id %d, category_id %d, nominee_id %d>' % (
             self.selection_id, self.category_id, self.nominee_id)
+
+    def as_dict(self):
+        return {x: self.__dict__[x] for x in self.keys}
 
 
 def seed():
@@ -195,3 +202,13 @@ def seed():
     group.name = "abc"
     db.session.add(group)
     db.session.commit()
+
+
+def from_json(cls, json_string):
+    selection = cls()
+    values = json.loads(json_string)
+    if not cls.keys.issubset(values.keys()):
+        return  # raise exception or some shit
+    for key in Selection.keys:
+        selection.__dict__[key] = values[key]
+    return selection

@@ -13,7 +13,7 @@ class Util():
             picks = self.db.session.query(Pick).filter(Pick.selection_id == selection.id).all()
             points = 0
             for pick in picks:
-                category = self.db.session.query(Category).filter(Category.id == pick.category_id).all()[0]
+                category = self.db.session.query(Category).filter(Category.id == pick.category_id).first()
                 if pick.nominee_id == category.winner:
                     points += category.point_value
             selection.points = points
@@ -21,7 +21,7 @@ class Util():
             self.db.session.commit()
 
     def set_winner(self, category_id, nominee_id):
-        category = self.db.session.query(Category).filter(Category.id == category_id).all()[0]
+        category = self.db.session.query(Category).filter(Category.id == category_id).first()
         category.winner = nominee_id
         self.db.session.merge(category)
         self.db.session.commit()
