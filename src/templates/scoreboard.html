@@ -16,10 +16,15 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="/">Scoreboard</a>
+            <a class="brand" href="/{{ group.hash_name }}">Scoreboard</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="/selection/create">Create Selection</a></li>
+                    <li><a href="{{group.hash_name}}/selection/create">Make Picks</a></li>
+                </ul>
+            </div>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/">New Group</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -29,7 +34,8 @@
 
 <div class="container-fluid">
     <h2></h2><br>
-    <h2>Scoreboard</h2>
+    <h3>Share this link to add people to your group</h3>
+    <h2>Scoreboard for {{ group.name }}</h2>
     <table class="table table-hover table-condensed table-bordered">
         <thead>
         <tr>
@@ -39,7 +45,7 @@
         </thead>
         {% for selection in selections %}
             <tr>
-            <td><a href="/selection/{{ selection.id }}">{{ selection.name }}</a></td>
+            <td><a href="/{{ group.hash_name }}/selection/{{ selection.id }}">{{ selection.name }}</a></td>
             <td>{{ selection.points }}</td>
             </tr>
     {% endfor %}

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Golden Globe Selection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Les styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+</head>
+<body>
+<!-- The nav bar at the top -->
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <h2></h2><br><br>
+
+    <h1>Welcome to Watchparty!  Create a new Group to get started!</h1>
+
+    <form action="/group" method="post" class="form-horizontal">
+        {% if warning %}
+            <h2><p class="text-danger">{{ warning }}</p></h2>
+        {% endif %}
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Create A New Group</legend>
+
+            <!-- Text input-->
+            <div class="control-group">
+                <label class="control-label" for="selection_name">Group Name</label>
+                <div class="controls">
+                    <input id="selection_name" name="group_name" type="text" class="input-xlarge">
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="submit">Submit</label>
+                <div class="controls">
+                    <input id="submit" type="submit" value="Submit">
+                </div>-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+<!--/.fluid-container-->
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src=" /static/js/jquery.min.js"></script>
+<script src=" /static/js/bootstrap.min.js"></script>
+
+</body>
+</html>
