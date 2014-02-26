@@ -15,10 +15,15 @@
 <div class="navbar navbar-fixed-top navbar-inverse">
     <div class="navbar-inner">
         <div class="container-fluid">
-            <a class="brand" href="/">Scoreboard</a>
+            <a class="brand" href="/{{ group.hash_name }}">Scoreboard</a>
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a href="/selection/create">Create Selection</a></li>
+                    <li><a href="/{{ group.hash_name }}/selection/create">Make Picks</a></li>
+                </ul>
+            </div>
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/">New Group</a></li>
                 </ul>
             </div>
             <!--/.nav-collapse -->
@@ -31,7 +36,7 @@
     {% if warning %}
         <h2><p class="text-danger">{{ warning }}</p></h2>
     {% endif %}
-    <form action="/selection/create" method="post" class="form-horizontal">
+    <form action="/{{ group.hash_name }}/selection/create" method="post" class="form-horizontal">
         <fieldset>
             <!-- Form Name -->
             <legend>Create Selection</legend>

@@ -9,7 +9,7 @@ class SelectionsController():
     def __init__(self, db):
         self.db = db
 
-    def create_get(self, warning=None):
+    def create_get(self, group, warning=None):
         params = []
         categories = self.db.session.query(Category).all()
         for category in categories:
@@ -18,25 +18,28 @@ class SelectionsController():
             param["category"] = category
             param["nominees"] = nominees
             params.append(param)
-        return render_template("selectioncreate.html", warning=warning, params=params)
+        return render_template("selectioncreate.html", warning=warning, params=params, group=group)
 
-    def create_post(self, params):
+    def create_post(self, group, params):
         category_ids = set([str(x[0]) for x in self.db.session.query(Category.id).order_by(Category.id).all()])
         if not category_ids.issubset(params.keys()):
             return self.create_get("Please select a winner for every category")
         if params["selection_name"] == "":
             return self.create_get("Please select a name for your selections")
         selection = Selection(params["selection_name"])
+        selection.group_id = group.id
         self.db.session.add(selection)
         self.db.session.commit()
+        picks = list()
         for category_id in category_ids:
             nominee_id = int(params[category_id])
             pick = Pick(selection.id, category_id, nominee_id)
-            self.db.session.add(pick)
-            self.db.session.commit()
-        return redirect(url_for('selection_get', selection_id=selection.id))
+            picks.append(pick)
+        self.db.session.add_all(picks)
+        self.db.session.commit()
+        return self.get(group=group, selection_id=selection.id)
 
-    def get(self, selection_id):
+    def get(self, group, selection_id):
         selection = self.db.session.query(Selection).filter(Selection.id == selection_id).first()
         picks = self.db.session.query(Pick).filter(Pick.selection_id == selection_id).order_by(Pick.category_id).all()
         params = []
@@ -45,4 +48,4 @@ class SelectionsController():
             nominee_name = self.db.session.query(Nominee).filter(Nominee.id == pick.nominee_id).first().name
             param = {"category_name": category_name, "nominee_name": nominee_name}
             params.append(param)
-        return render_template("selectionview.html", params=params, name=selection.name)
+        return render_template("selectionview.html", group=group, params=params, name=selection.name)

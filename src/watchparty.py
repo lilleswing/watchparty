@@ -2,9 +2,10 @@ import os
 
 from flask import Flask, request
 from flask import render_template
-from models import Selection, db
+from models import Selection, db, Group
 from controllers.selections_controller import SelectionsController
 from controllers.categories_controller import CategoriesController
+from controllers.groups_controller import GroupsController
 
 
 app = Flask(__name__)
@@ -13,27 +14,34 @@ db.app = app
 db.init_app(app)
 selectionsController = SelectionsController(db)
 categoriesController = CategoriesController(db)
+groupsController = GroupsController(db)
 
 
 @app.route('/')
 def home():
-    selections = db.session.query(Selection).order_by(Selection.points).all()[::-1]
-    return render_template('scoreboard.html', selections=selections)
+    return groupsController.get()
+
+@app.route('/group', methods=["POST"])
+def group_create():
+    return groupsController.create(request.form)
 
 
-@app.route('/selection/create', methods=["GET"])
-def selection_create_get():
-    return selectionsController.create_get()
+@app.route('/<string:hash_name>/selection/create', methods=["GET"])
+def selection_create_get(hash_name):
+    group = db.session.query(Group).filter(Group.hash_name == hash_name).one()
+    return selectionsController.create_get(group)
 
 
-@app.route('/selection/create', methods=["POST"])
-def selection_create_post():
-    return selectionsController.create_post(request.form)
+@app.route('/<string:hash_name>/selection/create', methods=["POST"])
+def selection_create_post(hash_name):
+    group = db.session.query(Group).filter(Group.hash_name == hash_name).one()
+    return selectionsController.create_post(group, request.form)
 
 
-@app.route('/selection/<int:selection_id>', methods=["GET"])
-def selection_get(selection_id):
-    return selectionsController.get(selection_id)
+@app.route('/<string:hash_name>/selection/<int:selection_id>', methods=["GET"])
+def selection_get(hash_name, selection_id):
+    group = db.session.query(Group).filter(Group.hash_name == hash_name).one()
+    return selectionsController.get(group, selection_id)
 
 
 @app.route('/category', methods=["GET"])
@@ -44,6 +52,13 @@ def category_get():
 @app.route('/category/<int:category_id>', methods=["GET"])
 def category_show(category_id):
     return categoriesController.get(category_id)
+
+@app.route('/<string:hash_name>', methods=["GET"])
+def scoreboard(hash_name):
+    group = db.session.query(Group).filter(Group.hash_name == hash_name).one()
+    selections = db.session.query(Selection).filter(Selection.group_id == group.id)\
+        .order_by(Selection.points).all()[::-1]
+    return render_template('scoreboard.html', group=group, selections=selections)
 
 
 @app.route('/robots.txt')
