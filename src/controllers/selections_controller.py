@@ -3,6 +3,15 @@ __author__ = 'leswing'
 from flask import render_template, redirect, url_for
 from models import Nominee, Category, Pick, Selection
 
+def sort_categories(categories, id_func):
+    category_order = [7, 18, 9, 10, 20, 2, 21, 11, 22, 23, 5, 4,13, 8, 6,
+                     1, 17, 16, 12, 14, 3, 15, 19, 24]
+    cat_dict = {id_func(x): x for x in categories}
+    ordered = list()
+    print cat_dict
+    for elem in category_order:
+        ordered.append(cat_dict[elem])
+    return ordered
 
 class SelectionsController():
 
@@ -12,6 +21,7 @@ class SelectionsController():
     def create_get(self, group, warning=None):
         params = []
         categories = self.db.session.query(Category).all()
+        categories = sort_categories(categories, lambda x: x.id)
         for category in categories:
             param = {}
             nominees = self.db.session.query(Nominee).filter(Nominee.category_id == category.id).all()
@@ -42,6 +52,7 @@ class SelectionsController():
     def get(self, group, selection_id):
         selection = self.db.session.query(Selection).filter(Selection.id == selection_id).first()
         picks = self.db.session.query(Pick).filter(Pick.selection_id == selection_id).order_by(Pick.category_id).all()
+        picks = sort_categories(picks, lambda x: x.category_id)
         params = []
         for pick in picks:
             category_name = self.db.session.query(Category).filter(Category.id == pick.category_id).first().name
