@@ -31,6 +31,8 @@ class SelectionsController():
         return render_template("selectioncreate.html", warning=warning, params=params, group=group)
 
     def create_post(self, group, params):
+        if True:
+            return None
         category_ids = set([str(x[0]) for x in self.db.session.query(Category.id).order_by(Category.id).all()])
         if not category_ids.issubset(params.keys()):
             return self.create_get("Please select a winner for every category")
