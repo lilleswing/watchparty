@@ -29,7 +29,6 @@ class Selection(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     group_id = db.Column(db.Integer)
     name = db.Column(db.String(80))
-    group_id = db.Column(db.Integer)
     points = db.Column(db.Integer)
 
     def __init__(self, name):
