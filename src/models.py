@@ -75,15 +75,15 @@ def seed():
     db.drop_all()
     db.create_all()
 
-    data = json.loads(open('../dev/db/oscars.json').read())
-    categories = data.keys()
-    for cat_name in categories:
-        cat_model = Category(cat_name)
-        db.session.add(cat_model)
-        db.session.commit()
-        cat_values = data[cat_name]
-        for value in cat_values:
-            print value
-            nom = Nominee(value, cat_model.id)
-            db.session.add(nom)
+    data = json.loads(open('../dev/db/oscars_2015.json').read())
+    for entry in data:
+        for cat_name in entry.keys():
+            cat_model = Category(cat_name)
+            db.session.add(cat_model)
             db.session.commit()
+            cat_values = entry[cat_name]
+            for value in cat_values:
+                print value
+                nom = Nominee(value, cat_model.id)
+                db.session.add(nom)
+                db.session.commit()

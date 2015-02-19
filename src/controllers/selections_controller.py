@@ -20,8 +20,7 @@ class SelectionsController():
 
     def create_get(self, group, warning=None):
         params = []
-        categories = self.db.session.query(Category).all()
-        categories = sort_categories(categories, lambda x: x.id)
+        categories = self.db.session.query(Category).order_by(Category.id).all()
         for category in categories:
             param = {}
             nominees = self.db.session.query(Nominee).filter(Nominee.category_id == category.id).all()
