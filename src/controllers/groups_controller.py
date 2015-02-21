@@ -1,10 +1,12 @@
-from sqlalchemy.orm.exc import NoResultFound
-from flask import render_template, redirect, url_for
-from models import Group
 import hashlib
 
-___author__ = 'leswing'
+from sqlalchemy.orm.exc import NoResultFound
+from flask import render_template, redirect, url_for
 
+from models import Group
+
+
+___author__ = 'leswing'
 
 
 class GroupsController():

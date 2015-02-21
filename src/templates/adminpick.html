@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Oscar Picks</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Les styles -->
+    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link rel="shortcut icon" href="/static/img/favicon.png">
+
+</head>
+<body>
+<!-- The nav bar at the top -->
+<div class="navbar navbar-fixed-top navbar-inverse">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="/">New Group</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+
+<div class="container-fluid">
+    
+    <form action="/admin/{{category.id}}" method="post" class="form-horizontal">
+        <fieldset>
+            <!-- Form Name -->
+            <legend>Pick Winner</legend>
+
+            <!-- Multiple Radios -->
+            <div class="control-group">
+                <label class="control-label" for="radios">{{ category.name }}</label>
+                <div class="controls">
+                    {% for nominee in nominees %}
+                    <label class="radio" for={{ nominee.id }}>
+                        <input type="radio" name="winner" id={{ nominee.id }} value={{ nominee.id }}
+                               checked="checked">
+                        {{ nominee.name }}
+                    </label>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Button -->
+            <div class="control-group">
+                <label class="control-label" for="submit">Submit</label>
+                <div class="controls">
+                    <input id="submit" type="submit" value="Submit">
+                </div>-->
+            </div>
+        </fieldset>
+    </form>
+</div>
+
+
+<!-- Le javascript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src=" /static/js/jquery.min.js"></script>
+<script src=" /static/js/bootstrap.min.js"></script>
+
+</body>
+</html>
