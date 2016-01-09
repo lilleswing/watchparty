@@ -74,7 +74,7 @@ def seed():
     db.drop_all()
     db.create_all()
 
-    data = json.loads(open('../dev/db/oscars_2015.json').read())
+    data = json.loads(open('../dev/db/golden_globes__2016.json').read())
     for entry in data:
         for cat_name in entry.keys():
             cat_model = Category(cat_name)
